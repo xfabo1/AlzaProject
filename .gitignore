@@ -1,0 +1,24 @@
+# Build output
+bin/
+obj/
+publish/
+
+# JetBrains Rider / IntelliJ
+.idea/
+*.iml
+*.DotSettings.user
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Tests and coverage
+TestResults/
+coverage/
+*.trx
+*.coverage
+
+# OS files
+.DS_Store
+Thumbs.db

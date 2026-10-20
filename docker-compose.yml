@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: alza
+      POSTGRES_PASSWORD: alza
+      POSTGRES_DB: alza
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alza"]
+      interval: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: src/Planner.Api/Dockerfile
+    environment:
+      ConnectionStrings__Db: Host=db;Username=alza;Password=alza;Database=alza
+      Seed__Orders: "1000000"   # demo data on first start; set to 0 to disable
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  dbdata:
